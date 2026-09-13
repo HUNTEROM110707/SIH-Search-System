@@ -11,16 +11,8 @@ load_dotenv()
 app = FastAPI()
 
 # Database connection
-connection_url = URL.create(
-    "postgresql",
-    username="postgres",
-    password=os.getenv("DATABASE_PASSWORD"),
-    host="localhost",
-    port=5432,
-    database="sih_document_db"
-)
-
-engine = create_engine(connection_url)
+DATABASE_URL = os.getenv("DATABASE_URL")
+engine = create_engine(DATABASE_URL)
 
 # CORS for existing Vercel frontend
 app.add_middleware(
