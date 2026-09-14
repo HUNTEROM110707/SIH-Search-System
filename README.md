@@ -1,4 +1,4 @@
-# 🔐 CaseVault — Secure Legal Document Search System
+# CaseVault — Secure Legal Document Search System
 
 > **Smart India Hackathon 2026 — SIH26190**
 
@@ -24,24 +24,26 @@ The backend provides a fast and structured REST API connected to a PostgreSQL da
 ## 🏗️ System Architecture
 
 ```text
-                    ┌──────────────────────┐
-                    │   CaseVault Frontend │
-                    │      (Vercel)        │
-                    └──────────┬───────────┘
-                               │
-                               │ REST API
-                               ▼
-                    ┌──────────────────────┐
-                    │   FastAPI Backend    │
-                    │       (Render)       │
-                    └──────────┬───────────┘
-                               │
-                               │ SQLAlchemy
-                               ▼
-                    ┌──────────────────────┐
-                    │ PostgreSQL Database  │
-                    │        (Neon)        │
-                    └──────────────────────┘
+                    ┌─────────────────────────┐
+                    │    CaseVault Frontend   │
+                    │         Vercel          │
+                    └────────────┬────────────┘
+                                 │
+                              REST API
+                                 │
+                                 ▼
+                    ┌─────────────────────────┐
+                    │     FastAPI Backend     │
+                    │         Render          │
+                    └────────────┬────────────┘
+                                 │
+                            SQLAlchemy
+                                 │
+                                 ▼
+                    ┌─────────────────────────┐
+                    │   PostgreSQL Database   │
+                    │          Neon           │
+                    └─────────────────────────┘
 ```
 
 ---
@@ -57,12 +59,12 @@ The backend provides a fast and structured REST API connected to a PostgreSQL da
 * 🗄️ PostgreSQL database integration
 * ⚡ FastAPI REST API
 * 🌐 CORS support for frontend integration
-* ☁️ Cloud deployment using Render
+* ☁️ Render cloud deployment
 * 🔐 Environment-variable based database configuration
 
 ---
 
-## 🛠️ Tech Stack
+## 🛠️ Technology Stack
 
 | Technology | Purpose                    |
 | ---------- | -------------------------- |
@@ -82,11 +84,48 @@ The backend provides a fast and structured REST API connected to a PostgreSQL da
 ```text
 SIH-Search-System/
 │
-├── main.py              # FastAPI application
-├── requirements.txt     # Python dependencies
-├── .gitignore           # Ignored files and secrets
-└── README.md            # Project documentation
+├── member4/
+│   ├── __init__.py
+│   ├── api.py
+│   ├── config.py
+│   ├── database.py
+│   ├── demo.py
+│   ├── models.py
+│   ├── schemas.py
+│   └── search.py
+│
+├── main.py
+├── requirements.txt
+├── .gitignore
+└── README.md
 ```
+
+### Member 4 Components
+
+| File          | Responsibility                |
+| ------------- | ----------------------------- |
+| `api.py`      | FastAPI API endpoints         |
+| `config.py`   | Environment configuration     |
+| `database.py` | PostgreSQL / Neon connection  |
+| `models.py`   | Document data structure       |
+| `schemas.py`  | API response structure        |
+| `search.py`   | Document search and filtering |
+| `demo.py`     | Search demonstration          |
+
+---
+
+## 🔍 Search Filters
+
+The API supports:
+
+* FIR Number
+* Case Number
+* Officer Name
+* Document Type
+* Legal Section
+* Document Date
+
+Multiple filters can be combined in a single request.
 
 ---
 
@@ -112,7 +151,7 @@ Response:
 GET /documents/search
 ```
 
-### Available Search Parameters
+### Available Parameters
 
 | Parameter       | Description             | Example        |
 | --------------- | ----------------------- | -------------- |
@@ -123,13 +162,13 @@ GET /documents/search
 | `section`       | Search by legal section | `IPC 302`      |
 | `document_date` | Search by document date | `2026-01-10`   |
 
-### Example
+### Example Request
 
 ```http
 GET /documents/search?fir_number=FIR001
 ```
 
-Example response:
+### Example Response
 
 ```json
 {
@@ -150,7 +189,7 @@ Example response:
 
 ---
 
-## 💻 Run Locally
+## ⚙️ Run Locally
 
 ### 1. Clone the repository
 
@@ -161,20 +200,25 @@ cd SIH-Search-System
 
 ### 2. Create a virtual environment
 
-Windows:
-
 ```powershell
 python -m venv venv
+```
+
+### 3. Activate the environment
+
+Windows PowerShell:
+
+```powershell
 venv\Scripts\activate
 ```
 
-### 3. Install dependencies
+### 4. Install dependencies
 
 ```powershell
 pip install -r requirements.txt
 ```
 
-### 4. Configure environment variables
+### 5. Configure environment variables
 
 Create a `.env` file:
 
@@ -184,10 +228,10 @@ DATABASE_URL=YOUR_POSTGRESQL_CONNECTION_STRING
 
 > Never commit `.env` or database credentials to GitHub.
 
-### 5. Start the API
+### 6. Start the API
 
 ```powershell
-uvicorn main:app --reload
+python -m uvicorn main:app --reload
 ```
 
 The API will be available at:
@@ -196,7 +240,7 @@ The API will be available at:
 http://127.0.0.1:8000
 ```
 
-Interactive API documentation:
+Interactive Swagger documentation:
 
 ```text
 http://127.0.0.1:8000/docs
@@ -206,9 +250,11 @@ http://127.0.0.1:8000/docs
 
 ## ☁️ Deployment
 
-The backend is deployed using:
+The backend uses:
 
-**GitHub → Render → Neon PostgreSQL**
+```text
+GitHub → Render → Neon PostgreSQL
+```
 
 Live API:
 
@@ -216,7 +262,7 @@ Live API:
 https://sih-search-api.onrender.com
 ```
 
-API documentation:
+Swagger documentation:
 
 ```text
 https://sih-search-api.onrender.com/docs
@@ -224,7 +270,7 @@ https://sih-search-api.onrender.com/docs
 
 ---
 
-## 🔒 Security
+## 🔐 Security
 
 The project follows basic secure-development practices:
 
@@ -244,8 +290,8 @@ The project follows basic secure-development practices:
 
 Responsibilities:
 
-* PostgreSQL database design
-* Document metadata schema
+* PostgreSQL database integration
+* Document metadata structure
 * Search API development
 * Search filters
 * FastAPI backend
@@ -271,7 +317,7 @@ The system aims to provide secure, structured, and efficient access to legal and
 | PostgreSQL Database           | ✅ Complete     |
 | Search API                    | ✅ Complete     |
 | Search Filters                | ✅ Complete     |
-| Neon Deployment               | ✅ Complete     |
+| Neon Database                 | ✅ Complete     |
 | Render Deployment             | ✅ Complete     |
 | Frontend Integration          | 🔄 In Progress |
 | Production Security Hardening | 🔄 Planned     |
